@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
                 intent = Intent(this@MainActivity, GameActivity::class.java).apply {
                     putExtra("形狀",Flag)
                 }
-                startActivity(intent)
+                //startActivity(intent)
+                startActivityForResult(intent,99)
                 return true
             }
         })
@@ -42,16 +43,24 @@ class MainActivity : AppCompatActivity() {
                 RndShape()
                 }
             })
+         }
+
+    fun  RndShape() {
+        Flag = (1..4).random()
+        when (Flag) {
+            1 -> imgNext.setImageResource(R.drawable.circle)
+            2 -> imgNext.setImageResource(R.drawable.square)
+            3 -> imgNext.setImageResource(R.drawable.star)
+            4 -> imgNext.setImageResource(R.drawable.triangle)
         }
-
-    fun RndShape(){
-        Flag=(1..4).random()
-        when (Flag){
-            1->imgNext.setImageResource(R.drawable.circle)
-            2->imgNext.setImageResource(R.drawable.square)
-            3->imgNext.setImageResource(R.drawable.star)
-            4->imgNext.setImageResource(R.drawable.triangle)
-
     }
-}
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 99){
+            intent = Intent(this@MainActivity, MainActivity::class.java)
+            finish()
+        }
+    }
+
 }
